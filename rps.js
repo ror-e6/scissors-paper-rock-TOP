@@ -11,54 +11,59 @@ switch(computerChoice) {
     computerChoice = "Rock";
     return computerChoice
 }
+
 return computerChoice
 }
 
 function getHumanChoice() {
-humanChoice = prompt("Scissors, Paper or Rock?");
-return humanChoice;
+let input = prompt("Scissors, Paper or Rock?");
+let humanChoice = input.trim().replace(/[^a-z]/gi, "").toLowerCase();
+let validChoices = ["rock", "paper", "scissors"];
+
+if (!validChoices.includes(humanChoice)) {
+  alert("Invalid input! Please choose Rock, Paper or Scissors.");
+  return getHumanChoice();
 }
-
-let humanScore = 0
-let computerScore = 0
-
-function playRound(humanChoice, computerChoice) { 
-    if (humanChoice === computerChoice) {
-        return console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". This round ends in a draw!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer")
-    } else if (
-        (humanChoice === "Rock" && computerChoice === "Scissors") ||
-        (humanChoice === "Paper" && computerChoice === "Rock") ||
-        (humanChoice === "Scissors" && computerChoice === "Paper")
-    ) {
-        humanScore++;
-        console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". Human wins this round!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer");
-    } else {
-        computerScore++;
-        console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". Computer wins this round!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer");
-    }
+else {
+    return humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1).toLowerCase();
+}
 }
 
 function playGame() {
 let humanScore = 0
 let computerScore = 0
+
 function playRound(humanChoice, computerChoice) { 
     if (humanChoice === computerChoice) {
         return console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". This round ends in a draw!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer")
-    } else if (
-        (humanChoice === "Rock" && computerChoice === "Scissors") ||
-        (humanChoice === "Paper" && computerChoice === "Rock") ||
-        (humanChoice === "Scissors" && computerChoice === "Paper")
-    ) {
-        humanScore++;
-        console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". Human wins this round!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer");
-    } else {
-        computerScore++;
-        console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". Computer wins this round!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer");
+        } else if (
+            (humanChoice === "Rock" && computerChoice === "Scissors") ||
+            (humanChoice === "Paper" && computerChoice === "Rock") ||
+            (humanChoice === "Scissors" && computerChoice === "Paper")
+        ) {
+            humanScore++;
+            console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". Human wins this round!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer");
+        } else {
+            computerScore++;
+            console.log("Human selects " + humanChoice + " against Computer's " + computerChoice + ". Computer wins this round!" + " The score is currently: Human " + humanScore + " - " + computerScore + " Computer");
+        }
+    }
+
+for (let round = 1; round <= 5; round++) {
+    let human = getHumanChoice();      
+    let computer = getComputerChoice(3);
+    playRound(human, computer);
+    }
+
+    if (humanScore > computerScore) {
+        return "Final Score: Human " + humanScore + " - " + computerScore + " Computer. Human wins the game!"
+    }
+    else if (computerScore > humanScore) {
+        return "Final Score: Human " + humanScore + " - " + computerScore + " Computer. Computer wins the game!"
+    }
+    else {
+        return "The game has ended in a draw."
     }
 }
-playRound(humanChoice, computerChoice)
-}
 
-console.log(getComputerChoice(3))
-console.log(getHumanChoice())
-playGame()
+console.log(playGame());
